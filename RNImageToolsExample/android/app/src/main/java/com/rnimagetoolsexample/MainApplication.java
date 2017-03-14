@@ -48,21 +48,21 @@ public class MainApplication extends Application implements ReactApplication, IA
 
     @Override
     public String getClientID() {
-        return Keys.CSDK_CLIENT_ID;
+        return getString(R.string.CSDK_CLIENT_ID);
     }
 
     @Override
     public String getClientSecret() {
-        return Keys.CSDK_CLIENT_SECRET;
-    }
-
-    @Override
-    public String[] getAdditionalScopesList() {
-        return Keys.CSDK_SCOPES;
+        return getString(R.string.CSDK_CLIENT_SECRET);
     }
 
     @Override
     public String getRedirectURI() {
-        return Keys.CSDK_REDIRECT_URI;
+        return getString(R.string.CSDK_REDIRECT_URI);
+    }
+
+    @Override
+    public String[] getAdditionalScopesList() {
+        return new String[]{"email", "profile", "address"};
     }
 }
