@@ -8,7 +8,8 @@
 	},
 	"dependencies": {
 		"react": "15.4.2",
-		"react-native": "0.42.0"
+		"react-native": "0.42.0",
+		"react-native-image-tools": "git@github.com:npomfret/react-native-image-tools.git"
 	},
 	"devDependencies": {
 		"babel-jest": "19.0.0",
