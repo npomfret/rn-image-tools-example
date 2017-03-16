@@ -24,11 +24,13 @@ cp -r $SOURCE_DIR/AdobeCreativeSDKCore.framework $TARGET_DIR
 cp -r $SOURCE_DIR/AdobeCreativeSDKImage.framework $TARGET_DIR
 
 ```
-(NOTE: they **must** be in a directory named _Frameworks_)
+(NOTE: they **must** be in a directory named _Frameworks_ located at the root of your iOS project)
+
+If you wish to enter your adobe client id, secret key and redirect uri, add them to `componentWillMount` in `app.js`:
 
 ## Android
 
-Enter your adobe client id, secret key and redirect uri in 
+If you wish to enter your adobe client id, secret key and redirect uri, add them to:
 
     RNImageToolsExample/android/app/src/main/res/values/strings.xml
 
