@@ -18,6 +18,10 @@ export default class RNImageToolsExample extends Component {
     }
   }
 
+  componentDidMount() {
+    RNImageTools.authorize("client-id-here", "client-secret-here");
+  }
+
   async _openGallery() {
     try {
       const uri = await RNImageTools.openGallery({});
