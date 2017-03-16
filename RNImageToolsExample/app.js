@@ -19,7 +19,13 @@ export default class RNImageToolsExample extends Component {
   }
 
   componentDidMount() {
-    RNImageTools.authorize("client-id-here", "client-secret-here");
+    // this is the auth mechanism for iOS only,
+    // for android these values need to come from your MainApplication.java, in this example app we chose to reference them from strings.xml
+    RNImageTools.authorize(
+      "client-id-here",
+      "client-secret-here",
+      "client-redirect-here"
+    );
   }
 
   async _openGallery() {
