@@ -1,7 +1,8 @@
 "use strict";
 
 import React, {Component} from "react";
-import {AppRegistry, StyleSheet, Text, View, NativeModules, Button, Image, Dimensions} from "react-native";
+import {AppRegistry, StyleSheet, Text, View, Button, Image, Dimensions} from "react-native";
+import RNImageTools from "react-native-image-tools";
 
 const _width = Dimensions.get('window').width;
 
@@ -19,21 +20,21 @@ export default class RNImageToolsExample extends Component {
 
   async _openGallery() {
     try {
-      const uri = await NativeModules.RNImageTools.openGallery({});
+      const uri = await RNImageTools.openGallery({});
       console.log("chosen uri", uri);
       this.setState({originalImageUri: uri, editedImageUri: null});
     } catch (e) {
-      console.info("cancelled", e);
+      console.log("cancelled", e);
     }
   }
 
   async _openEditor() {
     try {
-      const uri = await NativeModules.RNImageTools.openEditor(this.state.originalImageUri);
+      const uri = await RNImageTools.openEditor(this.state.originalImageUri);
       console.log("edited uri", uri);
       this.setState({editedImageUri: uri});
     } catch (e) {
-      console.info("cancelled", e);
+      console.log("cancelled", e);
     }
   }
 
