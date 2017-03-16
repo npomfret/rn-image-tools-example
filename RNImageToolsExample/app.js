@@ -18,15 +18,23 @@ export default class RNImageToolsExample extends Component {
   }
 
   async _openGallery() {
-    const uri = await NativeModules.RNImageTools.openGallery({});
-    console.log("chosen uri", uri);
-    this.setState({originalImageUri: uri, editedImageUri: null});
+    try {
+      const uri = await NativeModules.RNImageTools.openGallery({});
+      console.log("chosen uri", uri);
+      this.setState({originalImageUri: uri, editedImageUri: null});
+    } catch (e) {
+      console.info("cancelled", e);
+    }
   }
 
   async _openEditor() {
-    const uri = await NativeModules.RNImageTools.openEditor(this.state.originalImageUri);
-    console.log("edited uri", uri);
-    this.setState({editedImageUri: uri});
+    try {
+      const uri = await NativeModules.RNImageTools.openEditor(this.state.originalImageUri);
+      console.log("edited uri", uri);
+      this.setState({editedImageUri: uri});
+    } catch (e) {
+      console.info("cancelled", e);
+    }
   }
 
   render() {
