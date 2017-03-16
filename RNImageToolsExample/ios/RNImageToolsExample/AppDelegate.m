@@ -9,6 +9,9 @@
 
 #import "AppDelegate.h"
 
+#import <AdobeCreativeSDKCore/AdobeCreativeSDKCore.h>
+#import <AdobeCreativeSDKImage/AdobeCreativeSDKImage.h>
+
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 
