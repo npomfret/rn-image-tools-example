@@ -2,15 +2,16 @@
 
 Example project for [react-native-image-tools](https://github.com/npomfret/react-native-image-tools).
 
-1. Install
+* Install
 
 ```
 git clone git@github.com:npomfret/rn-image-tools-example.git
 cd rn-image-tools-example
 ```
 
-2. Download the [https://creativesdk.adobe.com/downloads.html](Adobe Creative SDK) for iOS.
-3. Copy the required frameworks to the a `Frameworks` folder at the root of your iOS project (or use this script).
+## iOS
+
+* Copy the required frameworks to the a `Frameworks` folder at the root of your iOS project (or use this script).
 
 ```
 #!/usr/bin/env bash
@@ -25,7 +26,15 @@ cp -r $SOURCE_DIR/AdobeCreativeSDKImage.framework $TARGET_DIR
 ```
 (NOTE: they **must** be in a directory named _Frameworks_)
 
-4. Start
+## Android
+
+Enter your adobe client id, secret key and redirect uri in 
+
+    RNImageToolsExample/android/app/src/main/res/values/strings.xml
+
+### Finally...
+
+* Start
 
 ```
 cd RNImageToolsExample
