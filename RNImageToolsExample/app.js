@@ -9,6 +9,7 @@ const _width = Dimensions.get('window').width;
 export default class RNImageToolsExample extends Component {
   constructor(props) {
     super(props);
+
     this._openGallery = this._openGallery.bind(this);
     this._openEditor = this._openEditor.bind(this);
 
@@ -30,7 +31,7 @@ export default class RNImageToolsExample extends Component {
 
   async _openGallery() {
     try {
-      const uri = await RNImageTools.openGallery({});
+      const uri = await RNImageTools.selectImage({});
       console.log("chosen uri", uri);
       this.setState({originalImageUri: uri, editedImageUri: null});
     } catch (e) {
