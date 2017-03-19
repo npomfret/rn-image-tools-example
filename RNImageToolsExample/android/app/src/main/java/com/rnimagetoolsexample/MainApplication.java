@@ -15,7 +15,7 @@ import com.reactlibrary.RNImageToolsPackage;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainApplication extends Application implements ReactApplication, IAdobeAuthClientCredentials {
+public class MainApplication extends Application implements ReactApplication {
 
     private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
         @Override
@@ -42,27 +42,6 @@ public class MainApplication extends Application implements ReactApplication, IA
         super.onCreate();
         MultiDex.install(getBaseContext());
         SoLoader.init(this, /* native exopackage */ false);
-
-        AdobeCSDKFoundation.initializeCSDKFoundation(getApplicationContext());
     }
 
-    @Override
-    public String getClientID() {
-        return getString(R.string.CSDK_CLIENT_ID);
-    }
-
-    @Override
-    public String getClientSecret() {
-        return getString(R.string.CSDK_CLIENT_SECRET);
-    }
-
-    @Override
-    public String getRedirectURI() {
-        return getString(R.string.CSDK_REDIRECT_URI);
-    }
-
-    @Override
-    public String[] getAdditionalScopesList() {
-        return new String[]{"email", "profile", "address"};
-    }
 }
