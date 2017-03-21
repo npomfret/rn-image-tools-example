@@ -28,6 +28,7 @@
 		1B39FB621E7ABC7E00A440D3 /* AdobeCreativeSDKImage.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1B39FB601E7ABC7E00A440D3 /* AdobeCreativeSDKImage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1B39FB641E7ABC9500A440D3 /* AdobeCreativeSDKCoreResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1B39FB631E7ABC9500A440D3 /* AdobeCreativeSDKCoreResources.bundle */; };
 		1B39FB661E7ABCA400A440D3 /* AdobeCreativeSDKImageResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1B39FB651E7ABCA400A440D3 /* AdobeCreativeSDKImageResources.bundle */; };
+		1B3BA25B1E81DF0D0018E79D /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B3BA2431E81DEF80018E79D /* libRCTCameraRoll.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -115,6 +116,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNImageTools;
+		};
+		1B3BA2421E81DEF80018E79D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1B3BA23B1E81DEF80018E79D /* RCTCameraRoll.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 58B5115D1A9E6B3D00147676;
+			remoteInfo = RCTCameraRoll;
 		};
 		2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -283,6 +291,7 @@
 		1B39FB601E7ABC7E00A440D3 /* AdobeCreativeSDKImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdobeCreativeSDKImage.framework; path = Frameworks/AdobeCreativeSDKImage.framework; sourceTree = "<group>"; };
 		1B39FB631E7ABC9500A440D3 /* AdobeCreativeSDKCoreResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AdobeCreativeSDKCoreResources.bundle; path = Frameworks/AdobeCreativeSDKCore.framework/AdobeCreativeSDKCoreResources.bundle; sourceTree = "<group>"; };
 		1B39FB651E7ABCA400A440D3 /* AdobeCreativeSDKImageResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AdobeCreativeSDKImageResources.bundle; path = Frameworks/AdobeCreativeSDKImage.framework/AdobeCreativeSDKImageResources.bundle; sourceTree = "<group>"; };
+		1B3BA23B1E81DEF80018E79D /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "/Users/nickpomfret/Documents/github/rn-image-tools-example/RNImageToolsExample/node_modules/react-native/Libraries/NativeAnimation/../CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<absolute>"; };
 		2D02E47B1E0B4A5D006451C7 /* RNImageToolsExample-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RNImageToolsExample-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* RNImageToolsExample-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RNImageToolsExample-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3333D772656A4FE0B808307D /* libRNImageTools.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNImageTools.a; sourceTree = "<group>"; };
@@ -305,6 +314,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B3BA25B1E81DF0D0018E79D /* libRCTCameraRoll.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				1B39FB431E7ABC7200A440D3 /* AdobeCreativeSDKCore.framework in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
@@ -472,6 +482,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		1B3BA23C1E81DEF80018E79D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1B3BA2431E81DEF80018E79D /* libRCTCameraRoll.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		5E91572E1DD0AC6500FF2AA8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -493,6 +511,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				1B3BA23B1E81DEF80018E79D /* RCTCameraRoll.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -668,6 +687,10 @@
 					ProjectRef = 5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */;
 				},
 				{
+					ProductGroup = 1B3BA23C1E81DEF80018E79D /* Products */;
+					ProjectRef = 1B3BA23B1E81DEF80018E79D /* RCTCameraRoll.xcodeproj */;
+				},
+				{
 					ProductGroup = 00C302B61ABCB90400DB3ED1 /* Products */;
 					ProjectRef = 00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */;
 				},
@@ -780,6 +803,13 @@
 			fileType = archive.ar;
 			path = libRNImageTools.a;
 			remoteRef = 1B39F8DC1E7A904B00A440D3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1B3BA2431E81DEF80018E79D /* libRCTCameraRoll.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTCameraRoll.a;
+			remoteRef = 1B3BA2421E81DEF80018E79D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3DAD3E841DF850E9000B6D8A /* libRCTImage-tvOS.a */ = {

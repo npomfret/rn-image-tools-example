@@ -1,7 +1,7 @@
 "use strict";
 
 import React, {Component} from "react";
-import {AppRegistry, StyleSheet, Text, View, Button, Image, Dimensions} from "react-native";
+import {AppRegistry, StyleSheet, Text, View, Button, Image, Dimensions, CameraRoll, Platform} from "react-native";
 import RNImageTools from "react-native-image-tools";
 
 const _width = Dimensions.get('window').width;
@@ -19,7 +19,7 @@ export default class RNImageToolsExample extends Component {
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     // this is the auth mechanism for iOS only,
     // for android these values need to come from your MainApplication.java, in this example app we chose to reference them from strings.xml
     RNImageTools.authorize(
@@ -27,6 +27,27 @@ export default class RNImageToolsExample extends Component {
       "client-secret-here",
       "client-redirect-here"
     );
+
+    const fetchParams = {
+      first: 1,
+      groupTypes: "SavedPhotos",
+      assetType: "Photos"
+    };
+
+    if (Platform.OS === "android") {
+      // not supported in android
+      delete fetchParams.groupTypes;
+    }
+
+    const photos = await CameraRoll.getPhotos(fetchParams);
+    console.log("photos",photos);
+
+    const assets = photos.edges;
+
+    if (assets.length > 0) {
+      const uri = assets[0].node.image.uri;
+      this.setState({originalImageUri: uri, editedImageUri: null});
+    }
   }
 
   async _openGallery() {
