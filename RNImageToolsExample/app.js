@@ -1,7 +1,7 @@
 "use strict";
 
 import React, {Component} from "react";
-import {AppRegistry, StyleSheet, Text, View, Button, Image, Dimensions, CameraRoll, Platform} from "react-native";
+import {AppRegistry, StyleSheet, Text, View, Button, Image, Dimensions, CameraRoll, Platform, TextInput} from "react-native";
 import RNImageTools from "react-native-image-tools";
 
 const _width = Dimensions.get('window').width;
@@ -15,7 +15,9 @@ export default class RNImageToolsExample extends Component {
 
     this.state = {
       originalImageUri: null,
-      editedImageUri: null
+      editedImageUri: null,
+      outputFormat: 'JPEG',
+      quality: "80"
     }
   }
 
@@ -40,7 +42,7 @@ export default class RNImageToolsExample extends Component {
     }
 
     const photos = await CameraRoll.getPhotos(fetchParams);
-    console.log("photos",photos);
+    console.log("photos", photos);
 
     const assets = photos.edges;
 
@@ -62,7 +64,11 @@ export default class RNImageToolsExample extends Component {
 
   async _openEditor() {
     try {
-      const uri = await RNImageTools.openEditor(this.state.originalImageUri);
+      const uri = await RNImageTools.openEditor({
+        imageUri: this.state.originalImageUri,
+        outputFormat: this.state.outputFormat,
+        quality: parseInt(this.state.quality, 10)
+      });
       console.log("edited uri", uri);
       this.setState({editedImageUri: uri});
     } catch (e) {
@@ -92,7 +98,19 @@ export default class RNImageToolsExample extends Component {
                   <Image style={{width: _width / 2, height: _width / 2}} source={{uri: this.state.originalImageUri}}/>
                 </View>
               </View>
+            </View> : null
+        }
 
+        <View style={{flexDirection: 'row'}}>
+          <View style={{marginVertical: 4, flex: 1}}>
+            <TextInputField label="input image" value={this.state.originalImageUri} onChangeText={(value) => this.setState({originalImageUri: value})}/>
+            <TextInputField label="output quality" value={this.state.quality.toString()} onChangeText={(value) => this.setState({quality: value})} />
+            <TextInputField label="output format" value={this.state.outputFormat} onChangeText={(value) => this.setState({outputFormat: value})}/>
+          </View>
+        </View>
+
+        {
+          this.state.originalImageUri ? <View>
               <View style={{marginVertical: 4}}>
                 <Button
                   onPress={this._openEditor}
@@ -100,7 +118,6 @@ export default class RNImageToolsExample extends Component {
                   color="#841584"
                 />
               </View>
-
             </View> : null
         }
 
@@ -116,16 +133,42 @@ export default class RNImageToolsExample extends Component {
   }
 }
 
+class TextInputField extends Component {
+  render() {
+    return <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 4}}>
+      <Text style={{marginRight: 4, fontSize: 10}}>{this.props.label}</Text>
+      <View style={[styles.textContainer]}>
+        <TextInput underlineColorAndroid="transparent" style={styles.textInput} {...this.props} />
+      </View>
+    </View>
+  }
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5FCFF',
-    paddingTop: 30,
     paddingHorizontal: 8
   },
   welcome: {
     fontSize: 14,
     textAlign: 'center',
     margin: 10,
+  },
+  textContainer: {
+    borderWidth: 1,
+    borderRadius: 4,
+    overflow: 'hidden',
+    backgroundColor: "#666666",
+    flex: 1
+  },
+  textInput: {
+    color: "#d1d2cd",
+    paddingTop: 0,
+    paddingLeft: 2,
+    paddingRight: 0,
+    paddingBottom: 0,
+    fontSize: 16,
+    height: 24,
   }
 });
