@@ -10,7 +10,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.reactlibrary.RNImageToolsPackage;
+import com.pomocorp.rnimagetools.RNImageToolsPackage;
 
 import java.util.Arrays;
 import java.util.List;

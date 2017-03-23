@@ -1,7 +1,7 @@
 "use strict";
 
 import React, {Component} from "react";
-import {AppRegistry, StyleSheet, Text, View, Button, Image, Dimensions, CameraRoll, Platform, TextInput} from "react-native";
+import {AppRegistry, StyleSheet, Text, View, Button, Image, Dimensions, CameraRoll, Platform, TextInput, StatusBar} from "react-native";
 import RNImageTools from "react-native-image-tools";
 
 const _width = Dimensions.get('window').width;
@@ -47,16 +47,23 @@ export default class RNImageToolsExample extends Component {
     const assets = photos.edges;
 
     if (assets.length > 0) {
-      const uri = assets[0].node.image.uri;
-      this.setState({originalImageUri: uri, editedImageUri: null});
+      this.setState({
+        originalImageUri: assets[0].node.image.uri,
+        editedImageUri: null
+      });
     }
   }
 
   async _openGallery() {
     try {
       const uri = await RNImageTools.selectImage({});
+
       console.log("chosen uri", uri);
-      this.setState({originalImageUri: uri, editedImageUri: null});
+
+      this.setState({
+        originalImageUri: uri,
+        editedImageUri: null
+      });
     } catch (e) {
       console.log("cancelled", e);
     }
@@ -67,18 +74,23 @@ export default class RNImageToolsExample extends Component {
       const uri = await RNImageTools.openEditor({
         imageUri: this.state.originalImageUri,
         outputFormat: this.state.outputFormat,
-        quality: parseInt(this.state.quality, 10)
+        quality: parseInt(this.state.quality, 10),
+        preserveMetadata: true
       });
+
       console.log("edited uri", uri);
+
       this.setState({editedImageUri: uri});
     } catch (e) {
-      console.log("cancelled", e);
+      console.warn("error", e);
     }
   }
 
   render() {
     return (
       <View style={styles.container}>
+        <StatusBar hidden={true} />
+
         <Text style={styles.welcome}>
           react-native image tools example
         </Text>
@@ -147,7 +159,7 @@ class TextInputField extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#e4ffe2',
     paddingHorizontal: 8
   },
   welcome: {
