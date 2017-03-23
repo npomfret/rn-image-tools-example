@@ -80,7 +80,11 @@ export default class RNImageToolsExample extends Component {
 
       console.log("edited uri", uri);
 
-      this.setState({editedImageUri: uri});
+      if(!uri) {
+        console.log("editing cancelled");
+      } else {
+        this.setState({editedImageUri: uri});
+      }
     } catch (e) {
       console.warn("error", e);
     }
