@@ -17,7 +17,7 @@ export default class RNImageToolsExample extends Component {
       originalImageUri: null,
       editedImageUri: null,
       outputFormat: 'JPEG',
-      quality: "80"
+      quality: "70"
     }
   }
 
@@ -30,6 +30,18 @@ export default class RNImageToolsExample extends Component {
       "client-redirect-here"
     );
 
+    let originalImageUri  = await this.pickAnImageFromPhotos();
+    if(!originalImageUri) {
+      originalImageUri = "https://exposingtheinvisible.org/ckeditor_assets/pictures/32/content_example_ibiza.jpg";//some image that has metadata
+    }
+
+    this.setState({
+      originalImageUri: originalImageUri,
+      editedImageUri: null
+    });
+  }
+
+  async pickAnImageFromPhotos() {
     const fetchParams = {
       first: 1,
       groupTypes: "SavedPhotos",
@@ -42,15 +54,11 @@ export default class RNImageToolsExample extends Component {
     }
 
     const photos = await CameraRoll.getPhotos(fetchParams);
-    console.log("photos", photos);
 
     const assets = photos.edges;
 
     if (assets.length > 0) {
-      this.setState({
-        originalImageUri: assets[0].node.image.uri,
-        editedImageUri: null
-      });
+      return assets[0].node.image.uri;
     }
   }
 
