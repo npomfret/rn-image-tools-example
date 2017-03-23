@@ -75,7 +75,8 @@ export default class RNImageToolsExample extends Component {
         imageUri: this.state.originalImageUri,
         outputFormat: this.state.outputFormat,
         quality: parseInt(this.state.quality, 10),
-        preserveMetadata: true
+        preserveMetadata: true,
+        saveTo: 'photos'
       });
 
       console.log("edited uri", uri);
