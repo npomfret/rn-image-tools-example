@@ -123,15 +123,17 @@ export default class RNImageToolsExample extends Component {
         <View style={{marginVertical: 4}}>
         </View>
 
-        <View style={{flexDirection: 'row'}}>
-          <View style={{marginVertical: 4, flex: 1}}>
+        <View style={{flexDirection: 'row', marginVertical: 4}}>
+          <View style={{flex: 1, marginRight: 2}}>
             <TextInputField label="input image" value={this.state.originalImageUri} onChangeText={(value) => this.setState({originalImageUri: value})}/>
           </View>
-          <Button
-            onPress={this._openGallery}
-            title="..."
-            color="#841584"
-          />
+          <View style={{flexDirection: 'row'}}>
+            <Button
+              onPress={this._openGallery}
+              title="..."
+              color="#841584"
+            />
+          </View>
         </View>
 
         {
@@ -154,11 +156,11 @@ export default class RNImageToolsExample extends Component {
         </View>
 
         {
-          this.state.originalImageUri ? <View>
+          this.state.originalImageUri ? <View style={{flexDirection: 'row', justifyContent: 'center'}}>
               <View style={{marginVertical: 4}}>
                 <Button
                   onPress={this._openEditor}
-                  title="open editor"
+                  title="edit image"
                   color="#841584"
                 />
               </View>
@@ -243,24 +245,15 @@ class MetadataView extends Component {
       const isArray = (value instanceof Array);
       const isObject = type === 'object' && !isArray;
 
-      let valueAtText;
-      if (!isObject) {
-        try {
-          console.log("converting", parent, key);
-          valueAtText = !!value ? JSON.stringify(value) : "";
-          console.log("converted", value, valueAtText);
-        } catch (e) {
-          valueAtText = e.message;
-        }
-      }
+      const valueAsText = !!value ? JSON.stringify(value) : "";
 
       const id = parent + "_" + key;
 
       arr.push(
         <View key={id} style={{flexDirection: 'row'}}>
-          <Text style={{fontSize: 8, color: "#d1d2cd"}}>{key}</Text>
+          <Text style={{fontSize: 8, color: "#d1d2cd", fontWeight: isObject ? "600" : "200"}}>{key}</Text>
           {
-            isObject ? this._format(value, id) : <Text key={key} style={{fontSize: 8, color: "#d1d2cd"}}>: {valueAtText}</Text>
+            isObject ? this._format(value, id) : <Text key={key} style={{fontSize: 8, color: "#d1d2cd"}}>: {valueAsText}</Text>
           }
         </View>
       );
@@ -283,7 +276,7 @@ class MetadataView extends Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#e4ffe2',
-    padding: 8
+    padding: 2
   },
   welcome: {
     fontSize: 14,
