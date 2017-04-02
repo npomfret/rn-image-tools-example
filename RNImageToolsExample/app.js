@@ -36,11 +36,17 @@ export default class RNImageToolsExample extends Component {
       originalImageUri = "https://exposingtheinvisible.org/ckeditor_assets/pictures/32/content_example_ibiza.jpg";//some image that has metadata
     }
 
+    //originalImageUri = "assets-library://asset/asset.JPG?id=04A39A57-6015-4175-B193-2C61A0F89394&ext=JPG";
+
     this.setState({
       originalImageUri: originalImageUri,
       selectedImage: originalImageUri,
       editedImageUri: null
     });
+  }
+
+  componentDidUpdate() {
+    console.log("state", this.state);
   }
 
   static async pickAnImageFromPhotos() {
@@ -196,6 +202,10 @@ class MetadataView extends Component {
     }
   }
 
+  componentWillUpdate(nextProps, nextState) {
+    console.log("metadata", nextState.metadata);
+  }
+
   async _update() {
     const imageUri = this.props.image;
     if (!imageUri) {
@@ -205,7 +215,6 @@ class MetadataView extends Component {
     try {
       const metadata = await RNImageTools.imageMetadata(imageUri);
       this.setState({metadata});
-      console.log("metadata", metadata);
     } catch (e) {
       console.log("failed to get image metadata", e);
     }
@@ -219,11 +228,24 @@ class MetadataView extends Component {
       const isArray = (value instanceof Array);
       const isObject = type === 'object' && !isArray;
 
+      let valueAtText;
+      if(!isObject) {
+        try {
+          console.log("converting", parent, key);
+          valueAtText = !!value ? JSON.stringify(value) : "";
+          console.log("converted", value, valueAtText);
+        } catch (e) {
+          valueAtText = e.message;
+        }
+      }
+
+      const id = parent + "_" + key;
+
       arr.push(
-        <View key={parent + "_" + key} style={{flexDirection: 'row'}}>
+        <View key={id} style={{flexDirection: 'row'}}>
           <Text style={{fontSize: 10, color: "#d1d2cd"}}>{key}</Text>
           {
-            isObject ? this._format(value, key) : <Text key={key} style={{fontSize: 10, color: "#d1d2cd"}}>: {JSON.stringify(value)}</Text>
+            isObject ? this._format(value, id) : <Text key={key} style={{fontSize: 10, color: "#d1d2cd"}}>: {valueAtText}</Text>
           }
         </View>
       );
