@@ -78,7 +78,8 @@ export default class RNImageToolsExample extends Component {
 
       this.setState({
         originalImageUri: uri,
-        editedImageUri: null
+        editedImageUri: null,
+        selectedImage: uri
       });
     } catch (e) {
       console.log("cancelled", e);
@@ -100,7 +101,10 @@ export default class RNImageToolsExample extends Component {
       if (!uri) {
         console.log("editing cancelled");
       } else {
-        this.setState({editedImageUri: uri});
+        this.setState({
+          editedImageUri: uri,
+          selectedImage: uri
+        });
       }
     } catch (e) {
       console.warn("error", e);
@@ -117,9 +121,15 @@ export default class RNImageToolsExample extends Component {
         </Text>
 
         <View style={{marginVertical: 4}}>
+        </View>
+
+        <View style={{flexDirection: 'row'}}>
+          <View style={{marginVertical: 4, flex: 1}}>
+            <TextInputField label="input image" value={this.state.originalImageUri} onChangeText={(value) => this.setState({originalImageUri: value})}/>
+          </View>
           <Button
             onPress={this._openGallery}
-            title="select image"
+            title="..."
             color="#841584"
           />
         </View>
@@ -128,7 +138,7 @@ export default class RNImageToolsExample extends Component {
           this.state.originalImageUri ? <View>
               <View style={{marginVertical: 4, flexDirection: 'row', justifyContent: 'center'}}>
                 <TouchableOpacity onPress={() => this.setState({selectedImage: this.state.originalImageUri})}>
-                  <View style={{borderWidth: 1, borderRadius: 4, borderColor: 'blue'}}>
+                  <View style={{borderWidth: 1, borderRadius: 4, borderColor: 'green', overflow: 'hidden'}}>
                     <Image style={{width: _width / 2, height: _width / 2}} source={{uri: this.state.originalImageUri}}/>
                   </View>
                 </TouchableOpacity>
@@ -138,7 +148,6 @@ export default class RNImageToolsExample extends Component {
 
         <View style={{flexDirection: 'row'}}>
           <View style={{marginVertical: 4, flex: 1}}>
-            <TextInputField label="input image" value={this.state.originalImageUri} onChangeText={(value) => this.setState({originalImageUri: value})}/>
             <TextInputField label="output quality" value={this.state.quality.toString()} onChangeText={(value) => this.setState({quality: value})}/>
             <TextInputField label="output format" value={this.state.outputFormat} onChangeText={(value) => this.setState({outputFormat: value})}/>
           </View>
@@ -212,6 +221,12 @@ class MetadataView extends Component {
       return;
     }
 
+    Image.getSize(imageUri, (width, height) => {
+      this.setState({width, height})
+    }, (err) => {
+      console.warn("failed to get image size", err);
+    });
+
     try {
       const metadata = await RNImageTools.imageMetadata(imageUri);
       this.setState({metadata});
@@ -229,7 +244,7 @@ class MetadataView extends Component {
       const isObject = type === 'object' && !isArray;
 
       let valueAtText;
-      if(!isObject) {
+      if (!isObject) {
         try {
           console.log("converting", parent, key);
           valueAtText = !!value ? JSON.stringify(value) : "";
@@ -243,9 +258,9 @@ class MetadataView extends Component {
 
       arr.push(
         <View key={id} style={{flexDirection: 'row'}}>
-          <Text style={{fontSize: 10, color: "#d1d2cd"}}>{key}</Text>
+          <Text style={{fontSize: 8, color: "#d1d2cd"}}>{key}</Text>
           {
-            isObject ? this._format(value, id) : <Text key={key} style={{fontSize: 10, color: "#d1d2cd"}}>: {valueAtText}</Text>
+            isObject ? this._format(value, id) : <Text key={key} style={{fontSize: 8, color: "#d1d2cd"}}>: {valueAtText}</Text>
           }
         </View>
       );
@@ -255,8 +270,12 @@ class MetadataView extends Component {
 
   render() {
     return <View style={{flex: 1, backgroundColor: '#666666'}}>
-      <Text>Image metadata</Text>
-      {this._format(this.state.metadata, 'root')}
+      <View style={{padding: 4}}>
+        <Text style={{fontSize: 14, color: "#d1d2cd"}}>Image metadata</Text>
+        <Text ellipsizeMode="middle" numberOfLines={1} style={{fontSize: 8, color: "#d1d2cd"}}>uri: {this.props.image}</Text>
+        <Text style={{fontSize: 8, color: "#d1d2cd"}}>dimensions: {this.state.width}x{this.state.height}</Text>
+        {this._format(this.state.metadata, 'root')}
+      </View>
     </View>
   }
 }
