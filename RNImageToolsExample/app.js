@@ -72,9 +72,11 @@ export default class RNImageToolsExample extends Component {
 
   async _openGallery() {
     try {
-      const uri = await RNImageTools.selectImage({});
+      const selected = await RNImageTools.selectImage({});
 
-      console.log("chosen uri", uri);
+      console.log("chosen image", selected);
+
+      const uri = selected.uri;
 
       this.setState({
         originalImageUri: uri,
