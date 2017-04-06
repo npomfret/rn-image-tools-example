@@ -1,8 +1,11 @@
 "use strict";
 
 import React, {Component} from "react";
-import {AppRegistry, StyleSheet, Text, View, Button, Image, Dimensions, CameraRoll, Platform, TextInput, StatusBar, ScrollView, TouchableOpacity} from "react-native";
+import {NativeModules, NativeEventEmitter, AppRegistry, StyleSheet, Text, View, Button, Image, Dimensions, CameraRoll, Platform, TextInput, StatusBar, ScrollView, TouchableOpacity} from "react-native";
 import RNImageTools from "react-native-image-tools";
+
+const myModuleEvt = new NativeEventEmitter(NativeModules.RNImageTools);
+myModuleEvt.addListener('photoLibraryImage', (data) => console.log("photoLibraryImage", data));
 
 const _width = Dimensions.get('window').width;
 
@@ -18,17 +21,20 @@ export default class RNImageToolsExample extends Component {
       originalImageUri: null,
       editedImageUri: null,
       outputFormat: 'JPEG',
-      quality: "70"
+      quality: "70",
+      sampleImages: []
     }
   }
 
   async componentDidMount() {
-    if(Platform === 'ios') {//android implemention to follow
+    if (Platform === 'ios') {//android implemention to follow
       const hasPermission = await RNImageTools.checkImageLibraryPermission();
-      if(!hasPermission) {
+      if (!hasPermission) {
         await RNImageTools.requestImageLibraryPermission();
       }
     }
+
+    RNImageTools.loadThumbnails();
 
     // this is the auth mechanism for iOS only,
     // for android these values need to come from your MainApplication.java, in this example app we chose to reference them from strings.xml
@@ -38,7 +44,9 @@ export default class RNImageToolsExample extends Component {
       "client-redirect-here"
     );
 
-    let originalImageUri = await RNImageToolsExample.pickAnImageFromPhotos();
+    const sampleImages = await RNImageToolsExample.sampleImages();
+
+    let originalImageUri = sampleImages[0];
     if (!originalImageUri) {
       originalImageUri = "https://exposingtheinvisible.org/ckeditor_assets/pictures/32/content_example_ibiza.jpg";//some image that has metadata
     }
@@ -48,7 +56,8 @@ export default class RNImageToolsExample extends Component {
     this.setState({
       originalImageUri: originalImageUri,
       selectedImage: originalImageUri,
-      editedImageUri: null
+      editedImageUri: null,
+      sampleImages: sampleImages
     });
   }
 
@@ -56,9 +65,9 @@ export default class RNImageToolsExample extends Component {
     console.log("state", this.state);
   }
 
-  static async pickAnImageFromPhotos() {
+  static async sampleImages() {
     const fetchParams = {
-      first: 1,
+      first: 5,
       groupTypes: "SavedPhotos",
       assetType: "Photos"
     };
@@ -70,11 +79,7 @@ export default class RNImageToolsExample extends Component {
 
     const photos = await CameraRoll.getPhotos(fetchParams);
 
-    const assets = photos.edges;
-
-    if (assets.length > 0) {
-      return assets[0].node.image.uri;
-    }
+    return photos.edges.map((asset) => asset.node.image.uri);
   }
 
   async _openGallery() {
@@ -120,7 +125,7 @@ export default class RNImageToolsExample extends Component {
     }
   }
 
-  render() {
+  render(map) {
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <StatusBar hidden={true}/>
@@ -129,19 +134,24 @@ export default class RNImageToolsExample extends Component {
           react-native image tools example
         </Text>
 
-        <View style={{marginVertical: 4}}>
-        </View>
-
-        <View style={{flexDirection: 'row', marginVertical: 4}}>
-          <View style={{flex: 1, marginRight: 2}}>
-            <TextInputField label="input image" value={this.state.originalImageUri} onChangeText={(value) => this.setState({originalImageUri: value})}/>
-          </View>
-          <View style={{flexDirection: 'row'}}>
+        <View style={{marginVertical: 2}}>
+          <View style={{flexDirection: 'row', justifyContent: 'center', marginVertical: 2}}>
+            <View style={{flexDirection: 'row'}}>
+              {
+                this.state.sampleImages.map((uri) => <TouchableOpacity onPress={() => this.setState({originalImageUri: uri})}>
+                    <Image style={{width: _width / 8, height: _width / 8, marginHorizontal: 2}} source={{uri: uri}}/>
+                  </TouchableOpacity>
+                )
+              }
+            </View>
             <Button
               onPress={this._openGallery}
               title="..."
               color="#841584"
             />
+          </View>
+          <View style={{flex: 1, marginRight: 2}}>
+            <TextInputField label="input image" value={this.state.originalImageUri} onChangeText={(value) => this.setState({originalImageUri: value})}/>
           </View>
         </View>
 
