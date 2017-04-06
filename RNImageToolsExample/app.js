@@ -125,7 +125,7 @@ export default class RNImageToolsExample extends Component {
     }
   }
 
-  render(map) {
+  render() {
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <StatusBar hidden={true}/>
@@ -138,7 +138,7 @@ export default class RNImageToolsExample extends Component {
           <View style={{flexDirection: 'row', justifyContent: 'center', marginVertical: 2}}>
             <ScrollView horizontal={true}>
               {
-                this.state.sampleImages.map((uri) => <TouchableOpacity onPress={() => this.setState({originalImageUri: uri})}>
+                this.state.sampleImages.map((uri) => <TouchableOpacity key={uri} onPress={() => this.setState({originalImageUri: uri})}>
                     <Image style={{width: _width / 8, height: _width / 8, marginHorizontal: 2}} source={{uri: uri}}/>
                   </TouchableOpacity>
                 )
