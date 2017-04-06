@@ -23,6 +23,13 @@ export default class RNImageToolsExample extends Component {
   }
 
   async componentDidMount() {
+    if(Platform === 'ios') {//android implemention to follow
+      const hasPermission = await RNImageTools.checkImageLibraryPermission();
+      if(!hasPermission) {
+        await RNImageTools.requestImageLibraryPermission();
+      }
+    }
+
     // this is the auth mechanism for iOS only,
     // for android these values need to come from your MainApplication.java, in this example app we chose to reference them from strings.xml
     RNImageTools.authorize(
