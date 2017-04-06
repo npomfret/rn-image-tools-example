@@ -67,7 +67,7 @@ export default class RNImageToolsExample extends Component {
 
   static async sampleImages() {
     const fetchParams = {
-      first: 5,
+      first: 100,
       groupTypes: "SavedPhotos",
       assetType: "Photos"
     };
@@ -136,14 +136,14 @@ export default class RNImageToolsExample extends Component {
 
         <View style={{marginVertical: 2}}>
           <View style={{flexDirection: 'row', justifyContent: 'center', marginVertical: 2}}>
-            <View style={{flexDirection: 'row'}}>
+            <ScrollView horizontal={true}>
               {
                 this.state.sampleImages.map((uri) => <TouchableOpacity onPress={() => this.setState({originalImageUri: uri})}>
                     <Image style={{width: _width / 8, height: _width / 8, marginHorizontal: 2}} source={{uri: uri}}/>
                   </TouchableOpacity>
                 )
               }
-            </View>
+            </ScrollView>
             <Button
               onPress={this._openGallery}
               title="..."
