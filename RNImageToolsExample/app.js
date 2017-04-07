@@ -33,7 +33,7 @@ export default class RNImageToolsExample extends Component {
     }
 
     if (Platform === 'ios') {// in progress...
-      RNImageTools.loadThumbnails();
+      //RNImageTools.loadThumbnails();
     }
 
     // this is the auth mechanism for iOS only,
@@ -46,23 +46,18 @@ export default class RNImageToolsExample extends Component {
 
     const sampleImages = await RNImageToolsExample.sampleImages();
 
-    let originalImageUri = sampleImages[0];
-    if (!originalImageUri) {
-      originalImageUri = "https://exposingtheinvisible.org/ckeditor_assets/pictures/32/content_example_ibiza.jpg";//some image that has metadata
-    }
-
-    //originalImageUri = "assets-library://asset/asset.JPG?id=04A39A57-6015-4175-B193-2C61A0F89394&ext=JPG";
+    const originalImageUri = "https://exposingtheinvisible.org/ckeditor_assets/pictures/32/content_example_ibiza.jpg";//some image that has metadata
 
     this.setState({
       originalImageUri: originalImageUri,
-      selectedImage: originalImageUri,
+      selectedImage: null,
       editedImageUri: null,
       sampleImages: sampleImages
     });
   }
 
   componentDidUpdate() {
-    console.log("state", this.state);
+    // console.log("state", this.state);
   }
 
   static async sampleImages() {
@@ -218,7 +213,7 @@ class MetadataView extends Component {
     super(props);
 
     this.state = {
-      metadata: {}
+      imageData: null
     }
   }
 
@@ -233,7 +228,7 @@ class MetadataView extends Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    console.log("metadata", nextState.metadata);
+    //console.log("metadata", nextState.metadata);
   }
 
   async _update() {
@@ -249,8 +244,9 @@ class MetadataView extends Component {
     });
 
     try {
-      const metadata = await RNImageTools.imageMetadata(imageUri);
-      this.setState({metadata});
+      console.log("loading data for", imageUri);
+      const imageData = await RNImageTools.imageData(imageUri);
+      this.setState({imageData});
     } catch (e) {
       console.log("failed to get image metadata", e);
     }
@@ -283,10 +279,14 @@ class MetadataView extends Component {
   render() {
     return <View style={{flex: 1, backgroundColor: '#666666'}}>
       <View style={{padding: 4}}>
-        <Text style={{fontSize: 14, color: "#d1d2cd"}}>Image metadata</Text>
-        <Text ellipsizeMode="middle" numberOfLines={1} style={{fontSize: 8, color: "#d1d2cd"}}>uri: {this.props.image}</Text>
-        <Text style={{fontSize: 8, color: "#d1d2cd"}}>dimensions: {this.state.width}x{this.state.height}</Text>
-        {this._format(this.state.metadata, 'root')}
+
+        {this.state.imageData ? <View>
+            <Text style={{fontSize: 14, color: "#d1d2cd"}}>Image data</Text>
+
+            {this._format(this.state.imageData, 'root')}
+
+            <Text style={{fontSize: 8, color: "#d1d2cd"}}>actual dimensions: {this.state.width}x{this.state.height}</Text>
+          </View> : <Text style={{fontSize: 8, color: "#d1d2cd"}}>select an image</Text>}
       </View>
     </View>
   }
