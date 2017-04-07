@@ -47,6 +47,7 @@ export default class RNImageToolsExample extends Component {
     const sampleImages = await RNImageToolsExample.sampleImages();
 
     const originalImageUri = "https://exposingtheinvisible.org/ckeditor_assets/pictures/32/content_example_ibiza.jpg";//some image that has metadata
+    //const originalImageUri = "https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png";//some image that has metadata
 
     this.setState({
       originalImageUri: originalImageUri,
